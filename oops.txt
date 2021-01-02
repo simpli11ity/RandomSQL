@@ -1,0 +1,172 @@
+
+CREATE TABLE CAR
+( 
+	REG             varchar(10)  PRIMARY KEY,
+    MANUFACTURER    varchar(18)  NULL ,
+	MAKE            varchar(18)  NULL ,
+	YEAROFMANU      integer  NULL,
+	CHANCES         integer DEFAULT 0,
+	TRESULT         varchar(5)  NULL,
+    REASON          varchar(40)  NULL	
+);
+
+
+CREATE TABLE COWNER
+( 
+	REG REFERENCES CAR(REG),
+	POSTALAREA      varchar(18),
+	NNAME           varchar(18),
+	ADDRESS         varchar(18)
+);
+
+
+CREATE TABLE APPOINTMENT
+( 
+	REG REFERENCES CAR(REG),
+    TDATE           DATE NULL ,
+    TTIME           varchar(10),
+    CID             varchar(18),
+    LETTERDUE          varchar(3)
+);
+CREATE TABLE SPECIALISATION(
+    CARPART VARCHAR(20) PRIMARY KEY
+);
+
+CREATE TABLE TESTCENTRE
+( 
+	CID                varchar(18)  PRIMARY KEY,
+    ADDRESS            varchar(18)  NULL ,
+	POSTALAREA         varchar(18)  NULL
+);
+
+CREATE TABLE MECHANIC
+(  
+    CID REFERENCES TESTCENTRE(CID),
+	MECHNAME        varchar(18),
+	CARPART  references SPECIALISATION(CARPART),
+	MAVAILABILITY   varchar(18)  NULL ,
+	SUPERNAME       char(18) NULL,
+    HOLIDAY         date NULL,
+    MRETURN         date NULL,
+    startreplacement date NULL,
+    endreplacement date NULL
+);
+
+
+
+
+
+
+
+CREATE TABLE TTEST
+( 
+    CID REFERENCES TESTCENTRE(CID),
+    REG REFERENCES CAR(REG),
+    CARPART  REFERENCES   SPECIALISATION(CARPART),
+    CRITICALITY       varchar(18)  NULL, 
+    MECHNAME          VARCHAR(18) NULL,
+	CCOMMENT          varchar(30)  NULL ,
+   	P_F_W             varchar(18)  NULL ,
+    TESTDATE          DATE NULL 
+);
+
+/* inserts for CAR table */
+
+INSERT INTO CAR values ('11-D-54865','Volkswagen', 'Polo',2011,3,'Pass','All Okay');
+INSERT INTO CAR values ('10-D-54765','Volkswagen', 'Golf',2010,2,'Fail','Failed Engine');
+INSERT INTO CAR values ('09-D-36865','Kia', 'Rio','2009',2,'Fail','Failed multiple high criticalities');
+
+/* inserts for COWNER table */
+
+INSERT INTO COWNER values ('11-D-54865','C52TA87', 'John Smith', '205 Dame Street'); 
+INSERT INTO COWNER values ('10-D-54765','C52TA87', 'OWEN FARRELL', '217 Fake Street'); 
+INSERT INTO COWNER values ('09-D-36865','C52TA87', 'Jane Doe', '2 Camden Street'); 
+
+/* inserts for APPOINTMENT table */
+
+INSERT INTO APPOINTMENT VALUES ('10-D-54765','26-APR-18','14:35:00','B1','YES');
+INSERT INTO APPOINTMENT VALUES ('11-D-54865','14-FEB-2018','15:25:00','A1','Yes');
+INSERT INTO APPOINTMENT VALUES ('09-D-36865','16-FEB-2018','12:29:23','C1','Yes');
+
+
+insert into specialisation values('Brakes');
+insert into specialisation values('Gearbox');
+insert into specialisation values('Lights');
+insert into specialisation values('Engine');
+insert into specialisation values('Mirrors');
+insert into specialisation values('Inner trim');
+insert into specialisation values('Outer trim');
+insert into specialisation values('Seat adjust');
+insert into specialisation values('Door locks');
+insert into specialisation values('Seat belts');
+
+INSERT INTO TESTCENTRE VALUES ('B1','PLEASANT Street','C52TA87');
+INSERT INTO TESTCENTRE VALUES ('A1','PLEASANT Street','C52TA87');
+INSERT INTO TESTCENTRE VALUES ('C1','PLEASANT Street','C52TA87');
+
+INSERT INTO MECHANIC VALUES ('A1','John O Connor','Brakes','IS AVAILABLE','John Curren',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('A1','John O Connor','Gearbox','IS AVAILABLE','John Curren',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('A1','John O Connor','Lights','IS AVAILABLE','John Curren',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('A1','Maurice Neal','Engine','IS NOT AVAILABLE','John Curren', '24-FEB-18','2-APR-18',null,null);
+INSERT INTO MECHANIC VALUES ('A1','Ned oBrien','Mirrors','IS AVAILABLE','John Curren',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('A1','Ned oBrien','Inner trim','IS AVAILABLE','John Curren',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('A1','Ned oBrien','Outer trim','IS AVAILABLE','John Curren',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('A1','Ned oBrien','Seat adjust','IS AVAILABLE','John Curren',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('A1','Ned oBrien','Door locks','IS AVAILABLE','John Curren',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('A1','Ned oBrien','Seat belts','IS AVAILABLE','John Curren',null,null,null,null);
+
+INSERT INTO MECHANIC VALUES ('B1','Zake O swg','Brakes','IS AVAILABLE','Josh holdn',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('B1','Zake O swg','Gearbox','IS AVAILABLE','Josh holdn',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('B1','Zake O swg','Lights','IS AVAILABLE','Josh holdn',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('B1','Mark obbaweben','Engine','IS NOT AVAILABLE','Josh holdn', '24-FEB-18','2-APR-18',null,null);
+INSERT INTO MECHANIC VALUES ('B1','tim shiel','Mirrors','IS AVAILABLE','Josh holdn',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('B1','tim shiel','Inner trim','IS AVAILABLE','Josh holdn',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('B1','tim shiel','Outer trim','IS AVAILABLE','Josh holdn',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('B1','tim shiel','Seat adjust','IS AVAILABLE','Josh holdn',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('B1','tim shiel','Door locks','IS AVAILABLE','Josh holdn',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('B1','tim shiel','Seat belts','IS AVAILABLE','Josh holdn',null,null,null,null);
+
+INSERT INTO MECHANIC VALUES ('C1','jake peralta','Brakes','IS AVAILABLE','Cortney Carrillo',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('C1','jake peralta','Gearbox','IS AVAILABLE','Cortney Carrillo',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('C1','jake peralta','Lights','IS AVAILABLE','Cortney Carrillo',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('C1','Alex Reid','Engine','IS NOT AVAILABLE','Cortney Carrillo', '24-FEB-18','2-APR-18',null,null);
+INSERT INTO MECHANIC VALUES ('C1','Alex Reid','Mirrors','IS AVAILABLE','Cortney Carrillo',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('C1','Alex Reid','Inner trim','IS AVAILABLE','Cortney Carrillo',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('C1','Max Winkler','Outer trim','IS AVAILABLE','Cortney Carrillo',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('C1','Max Winkler','Seat adjust','IS AVAILABLE','Cortney Carrillo',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('C1','Max Winkler','Door locks','IS AVAILABLE','Cortney Carrillo',null,null,null,null);
+INSERT INTO MECHANIC VALUES ('C1','Max Winkler','Seat belts','IS AVAILABLE','Cortney Carrillo',null,null,null,null);
+
+
+INSERT INTO TTEST values ('B1','10-D-54765','Brakes','High', 'John O Connor','work well','Pass','14-FEB-2018');
+INSERT INTO TTEST values ('B1','10-D-54765','Gearbox','High', 'John O Connor', 'All OK ','Pass','14-FEB-2018');
+INSERT INTO TTEST values ('B1','10-D-54765','Engine','High', 'Maurice Neal', 'Need new sparkplug','Fail','14-FEB-2018');
+INSERT INTO TTEST values ('B1','10-D-54765','Lights','High', 'John O Connor', 'Fully working','Pass','14-FEB-2018');
+INSERT INTO TTEST values ('B1','10-D-54765','Mirrors','High', 'Ned oBrien', 'all working and adjustable','Pass','14-FEB-2018');
+INSERT INTO TTEST values ('B1','10-D-54765','Seat belts','High', 'Ned oBrien', 'all working and adjustable','Pass','14-FEB-2018');
+INSERT INTO TTEST values ('B1','10-D-54765','Door locks','Medium', 'Ned O Brien', 'Central Locking works','Pass','14-FEB-2018');
+INSERT INTO TTEST values ('B1','10-D-54765','Seat adjust','Medium', 'Ned O Brien', 'Front passenger seat stuck','Pass','14-FEB-2018');
+INSERT INTO TTEST values ('B1','10-D-54765','Outer trim','Low', 'Ned O Brien', 'Doors like new','Pass','14-FEB-2018');
+INSERT INTO TTEST values ('B1','10-D-54765','Inner trim','Low', 'Ned O Brien', 'Missing a head rest','Pass','14-FEB-2018');
+
+INSERT INTO TTEST values ('A1','11-D-54865','Brakes','High', 'John O Connor', 'All work well','Pass','14-FEB-2018');
+INSERT INTO TTEST values ('A1','11-D-54865','Gearbox','High', 'John O Connor', 'All okay ','Pass','14-FEB-2018');
+INSERT INTO TTEST values ('A1','11-D-54865','Engine','High', 'Maurice Neal', 'In working order','Pass','14-FEB-2018');
+INSERT INTO TTEST values ('A1','11-D-54865','Lights','High', 'John O Connor', 'Fully working','Pass','14-FEB-2018');
+INSERT INTO TTEST values ('A1','11-D-54865','Mirrors','High', 'Ned oBrien', 'all working and adjustable','Pass','14-FEB-2018');
+INSERT INTO TTEST values ('A1','11-D-54865','Seat belts','High', 'Ned oBrien', 'all working and adjustable','Pass','14-FEB-2018');
+INSERT INTO TTEST values ('A1','11-D-54865','Door locks','Medium', 'Ned O Brien', 'Central Locking works','Pass','14-FEB-2018');
+INSERT INTO TTEST values ('A1','11-D-54865','Seat adjust','Medium', 'Ned O Brien', 'All seats fine','Pass','14-FEB-2018');
+INSERT INTO TTEST values ('A1','11-D-54865','Outer trim','Low', 'Ned O Brien', 'Doors like new','Pass','14-FEB-2018');
+INSERT INTO TTEST values ('A1','11-D-54865','Inner trim','Low', 'Ned O Brien', 'perfect','Pass','14-FEB-2018');
+
+INSERT INTO TTEST values ('C1','09-D-36865','Brakes','High', 'John O Connor', 'All ok','Pass','16-FEB-2018');
+INSERT INTO TTEST values ('C1','09-D-36865','Gearbox','High', 'John O Connor', 'Need new clutch ','Fail','16-FEB-2018');
+INSERT INTO TTEST values ('C1','09-D-36865','Engine','High', 'Maurice Neal', 'Pistons needs replacing','Fail','16-FEB-2018');
+INSERT INTO TTEST values ('C1','09-D-36865','Lights','High', 'John O Connor', 'Missing fog lights','Fail','16-FEB-2018');
+INSERT INTO TTEST values ('C1','09-D-36865','Mirrors','High', 'Ned oBrien', 'all working ','Pass','16-FEB-2018');
+INSERT INTO TTEST values ('C1','09-D-36865','Seat belts','High', 'Ned oBrien', 'all working and adjustable','Pass','16-FEB-2018');
+INSERT INTO TTEST values ('C1','09-D-36865','Door locks','Medium', 'Ned O Brien', 'Central Locking works','Pass','16-FEB-2018');
+INSERT INTO TTEST values ('C1','09-D-36865','Seat adjust','Medium', 'Ned O Brien', 'All seats fine','Pass','16-FEB-2018');
+INSERT INTO TTEST values ('C1','09-D-36865','Outer trim','Low', 'Ned O Brien', 'Doors like new','Pass','16-FEB-2018');
+INSERT INTO TTEST values ('C1','09-D-36865','Inner trim','Low', 'Ned O Brien', 'No headrests','Pass','16-FEB-2018');
